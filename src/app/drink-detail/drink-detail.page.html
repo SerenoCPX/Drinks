@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <ion-card *ngIf="!loading && drink">
+    <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
+    <ion-card-header>
+      <ion-card-subtitle>{{ drink.strCategory }} · {{ drink.strAlcoholic }}</ion-card-subtitle>
+      <ion-card-title>{{ drink.strDrink }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Copo:</strong> {{ drink.strGlass }}</p>
+
+      <h3>Ingredientes</h3>
+      <ion-list lines="none">
+        <ion-item *ngFor="let ing of ingredients">
+          <ion-icon name="ellipse" slot="start" color="primary" style="font-size: 8px"></ion-icon>
+          <ion-label>{{ ing.measure }} {{ ing.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <h3>Modo de Preparo</h3>
+      <p>{{ drink.strInstructions }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!loading && drink">
+    <ion-card-header>
+      <ion-card-title>Salvar nos Favoritos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Avaliacao (1 a 5)</ion-label>
+        <ion-select [(ngModel)]="rating" interface="popover">
+          <ion-select-option [value]="1">1 estrela</ion-select-option>
+          <ion-select-option [value]="2">2 estrelas</ion-select-option>
+          <ion-select-option [value]="3">3 estrelas</ion-select-option>
+          <ion-select-option [value]="4">4 estrelas</ion-select-option>
+          <ion-select-option [value]="5">5 estrelas</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Anotacao</ion-label>
+        <ion-textarea
+          [(ngModel)]="notes"
+          rows="3"
+          placeholder="Observacoes sobre esse drink...">
+        </ion-textarea>
+      </ion-item>
+      <ion-button expand="block" (click)="saveFavorite()" [disabled]="saving" class="ion-margin-top">
+        <ion-icon name="heart" slot="start"></ion-icon>
+        {{ saving ? 'Salvando...' : 'Salvar nos Favoritos' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

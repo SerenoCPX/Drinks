@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Drink Aleatório</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Drink Aleatório</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="loading" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <ion-card *ngIf="!loading && drink">
+    <img [src]="drink.strDrinkThumb" [alt]="drink.strDrink" />
+    <ion-card-header>
+      <ion-card-subtitle>{{ drink.strCategory }} · {{ drink.strAlcoholic }}</ion-card-subtitle>
+      <ion-card-title>{{ drink.strDrink }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Copo:</strong> {{ drink.strGlass }}</p>
+      <p>{{ drink.strInstructions }}</p>
+    </ion-card-content>
+    <ion-button expand="block" fill="clear" (click)="openDetails()">
+      Ver detalhes
+      <ion-icon name="chevron-forward" slot="end"></ion-icon>
+    </ion-button>
+  </ion-card>
+
+  <div class="ion-padding">
+    <ion-button expand="block" (click)="loadRandom()" [disabled]="loading">
+      <ion-icon name="shuffle" slot="start"></ion-icon>
+      Sortear outro drink
+    </ion-button>
+  </div>
+</ion-content>
